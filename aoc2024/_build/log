@@ -1,0 +1,6 @@
+# dune init proj aoc2024
+# OCAMLPARAM: unset
+# Shared cache: enabled-except-user-rules
+# Shared cache location: /Users/jakubsapko/.cache/dune/db
+# Workspace root: /Users/jakubsapko/Programming/aoc-2024/aoc2024
+# Auto-detected concurrency: 8
