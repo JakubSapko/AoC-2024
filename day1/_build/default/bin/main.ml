@@ -31,6 +31,22 @@ let sum_distances left right =
         List.fold_left (+) 0 distances
 
 
+let count_occurences lst = 
+        let rec aux map = function
+                | [] -> map
+                | x :: xs ->
+                                let count = try List.assoc x map with Not_found -> 0 in
+                                aux ((x, count + 1) :: List.remove_assoc x map) xs
+        in
+        aux [] lst
+
+let sum_similarities left right =
+        let right_count_map = count_occurences right in
+        List.fold_left (fun sum left_value ->
+                let count = try List.assoc left_value right_count_map with Not_found -> 0 in
+                sum + (left_value * count)
+        ) 0 left
+
 let () =
         let (left_column, right_column) = read_columns file in
 
@@ -41,10 +57,12 @@ let () =
         let top_right = take 5 sorted_right in
         
         let distances = sum_distances sorted_left sorted_right in
+        let similarities = sum_similarities sorted_left sorted_right in
 
         Printf.printf "Left column: %s\n" (String.concat ", " (List.map string_of_int top_left));
         Printf.printf "Right column: %s\n" (String.concat ", " (List.map string_of_int top_right));
 
         Printf.printf "Part 1 solution: %s\n" (string_of_int distances);
+        Printf.printf "Part 2 solution: %s\n" (string_of_int similarities);
 
 
